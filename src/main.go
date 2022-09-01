@@ -41,6 +41,7 @@ func getMovie(w http.ResponseWriter, r *http.Request) {
 			if err != nil {
 				return
 			}
+			return
 		}
 	}
 }
@@ -65,7 +66,11 @@ func createMovie(w http.ResponseWriter, r *http.Request) {
 	_ = json.NewDecoder(r.Body).Decode(&movie)
 	movie.Id = strconv.Itoa(rand.Intn(10000000000000))
 	movies = append(movies, movie)
-	json.NewEncoder(w).Encode(movie)
+	err := json.NewEncoder(w).Encode(movie)
+	if err != nil {
+		return
+	}
+	return
 }
 
 func updateMovie(w http.ResponseWriter, r *http.Request) {
@@ -83,6 +88,7 @@ func updateMovie(w http.ResponseWriter, r *http.Request) {
 			if err != nil {
 				return
 			}
+			return
 		}
 	}
 }
